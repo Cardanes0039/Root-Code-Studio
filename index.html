@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RootCode Studio ⚡</title>
+
+  <style>
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-gradient1: #0f001a;
+      --bg-gradient2: #000814;
+      --text-primary: #e0e0ff;
+      --accent-start: #ff6b6b;
+      --accent-mid: #ffa94d;
+      --accent-end: #ffd43b;
+      --card-bg: rgba(30, 30, 60, 0.4);
+      --card-border: rgba(100, 80, 255, 0.18);
+      --shadow-neon: 0 0 35px rgba(255, 160, 60, 0.5);
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8f9fc;
+      --bg-gradient1: #e0e7ff;
+      --bg-gradient2: #c3dafe;
+      --text-primary: #1a1a3d;
+      --accent-start: #d32f2f;
+      --accent-mid: #f57c00;
+      --accent-end: #fbc02d;
+      --card-bg: rgba(255, 255, 255, 0.75);
+      --card-border: rgba(100, 80, 255, 0.3);
+      --shadow-neon: 0 8px 32px rgba(0, 0, 0, 0.15);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: "Segoe UI", system-ui, sans-serif;
+      overflow-x: hidden;
+      transition: background 0.5s ease, color 0.5s ease;
+      
+      background-image: 
+        radial-gradient(circle at 50% 50%, rgba(80,40,200,0.12) 0%, transparent 60%),
+        linear-gradient(135deg, var(--bg-gradient1) 0%, var(--bg-gradient2) 100%);
+    }
+
+    .logo-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.18;
+      background-image: url('BURAYA_LOGONUN_URL_SI_GELECEK'); /* ← LOGO BURAYA */
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: blur(1.8px) brightness(1.2);
+      transition: opacity 0.6s ease;
+    }
+
+    [data-theme="light"] .logo-bg {
+      opacity: 0.08;
+      filter: blur(2px) brightness(0.9);
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      padding: 80px 20px 100px;
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 4.8rem;
+      margin: 0.3em 0 0.2em;
+      background: linear-gradient(90deg, var(--accent-start), var(--accent-mid), var(--accent-end), #a5d8ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: var(--shadow-neon);
+      letter-spacing: -1px;
+      transition: all 0.5s ease;
+    }
+
+    .intro p {
+      font-size: 1.35rem;
+      line-height: 1.8;
+      max-width: 780px;
+      margin: 0 auto 3rem;
+      opacity: 0.92;
+    }
+
+    .services, .team {
+      margin: 6rem 0;
+    }
+
+    .section-title {
+      font-size: 3rem;
+      margin-bottom: 3rem;
+      color: var(--text-primary);
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 140px;
+      height: 5px;
+      background: linear-gradient(90deg, var(--accent-start), var(--accent-mid));
+      border-radius: 5px;
+    }
+
+    .services-list {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.8rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .services-list li {
+      background: var(--card-bg);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 2.2rem 1.5rem;
+      font-size: 1.4rem;
+      font-weight: 500;
+      transition: all 0.35s ease;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    }
+
+    .services-list li:hover {
+      transform: translateY(-10px);
+      border-color: var(--accent-mid);
+      box-shadow: var(--shadow-neon);
+    }
+
+    /* ── EKİBİMİZ (KLASİK ORTA ÇAĞ ŞÖVALYESİ) ── */
+    .team-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      max-width: 600px;
+      margin: 0 auto;
+      justify-items: center;
+    }
+
+    .team-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border: 2px solid var(--accent-mid);
+      border-radius: 24px;
+      padding: 3rem 2rem;
+      text-align: center;
+      transition: all 0.4s ease;
+      box-shadow: 0 0 50px rgba(255, 140, 0, 0.4);
+      max-width: 500px;
+    }
+
+    .team-card:hover {
+      transform: translateY(-15px) scale(1.03);
+      box-shadow: 0 30px 80px rgba(255, 140, 0, 0.5);
+    }
+
+    .avatar {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 6px solid var(--accent-mid);
+      box-shadow: 0 0 40px rgba(255, 140, 0, 0.7);
+      margin-bottom: 1.8rem;
+    }
+
+    .team-card h3 {
+      font-size: 2.2rem;
+      margin: 0.5rem 0;
+      color: var(--accent-end);
+    }
+
+    .role {
+      font-size: 1.5rem;
+      color: var(--accent-mid);
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+    }
+
+    .role::after {
+      content: " 👑";
+      font-size: 1.6rem;
+    }
+
+    .bio {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      line-height: 1.7;
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      width: 68px;
+      height: 34px;
+      background: rgba(30, 30, 60, 0.6);
+      border-radius: 50px;
+      border: 2px solid rgba(100, 80, 255, 0.4);
+      backdrop-filter: blur(10px);
+      cursor: pointer;
+      transition: all 0.4s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+
+    .theme-toggle::before {
+      content: '🌙';
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 26px;
+      height: 26px;
+      background: linear-gradient(145deg, #ffd43b, #ff6b6b);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: #0a0a0f;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    [data-theme="light"] .theme-toggle {
+      background: rgba(200, 200, 255, 0.6);
+      border-color: rgba(100, 80, 255, 0.6);
+    }
+
+    [data-theme="light"] .theme-toggle::before {
+      content: '🌞';
+      left: 34px;
+      background: linear-gradient(145deg, #87cefa, #4682b4);
+      color: #fff;
+      box-shadow: 0 0 20px rgba(135, 206, 250, 0.8);
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.08);
+      box-shadow: 0 8px 25px rgba(100, 80, 255, 0.5);
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 3.6rem; }
+      .intro p { font-size: 1.2rem; }
+      .theme-toggle { top: 15px; right: 15px; width: 60px; height: 30px; }
+      .theme-toggle::before { width: 22px; height: 22px; font-size: 16px; }
+      [data-theme="light"] .theme-toggle::before { left: 30px; }
+      .avatar { width: 160px; height: 160px; }
+      .team-card { padding: 2.5rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="logo-bg"></div>
+
+  <div class="theme-toggle" id="themeToggle"></div>
+
+  <div class="content">
+    <h1>RootCode Studio ⚡</h1>
+    
+    <div class="intro">
+      <p>Burada hayallerimizi örs ile dövüyoruz, çıkan kıvılcım bizim emeğimizin karşılığı.<br>
+      Fakat emeğimizin karşılığı olan bir şey daha varsa, o da kodlarımızdır.<br>
+      Bunu bize kodlar sağlıyor. Hadi gelin, sizlere elimizden neler gelebileceğini, neler öğrendiğimizi anlatalım.</p>
+    </div>
+
+    <div class="services">
+      <h2 class="section-title">Uzmanlık Alanlarımız</h2>
+      <ul class="services-list">
+        <li>Web Tasarımı</li>
+        <li>Animasyon</li>
+        <li>MTA & SA:MP Platformlarında Mapping</li>
+        <li>Grafik Tasarımı</li>
+      </ul>
+    </div>
+
+    <div class="team">
+      <h2 class="section-title">Ekibimiz</h2>
+      <div class="team-grid">
+        <div class="team-card">
+          <img src="https://thumbs.dreamstime.com/b/historic-knight-s-helmet-display-medieval-setting-cinematic-quality-render-dramatic-lighting-close-up-shot-armor-concept-350054036.jpg" alt="Cardanes - Orta Çağ Şövalyesi" class="avatar">
+          <h3>Cardanes</h3>
+          <div class="role">Owner</div>
+          <p class="bio">RootCode Studio'nun demir zırhlı şövalyesi ve tek lordu. Kılıcım kod, kalkanım mantık; kalelerimi satır satır yükseltiyorum. Her zafer bir yemin, her proje bir sefer – krallığım hazır, sen de katıl!</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const toggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    html.setAttribute('data-theme', savedTheme);
+
+    toggle.addEventListener('click', () => {
+      let current = html.getAttribute('data-theme');
+      let next = current === 'dark' ? 'light' : 'dark';
+      
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+  </script>
+
+</body>
+</html>
